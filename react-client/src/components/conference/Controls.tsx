@@ -1,6 +1,7 @@
 import { useState } from "react";
 import MicToggleButton from "../buttons/mic";
 import VideoToggleButton from "../buttons/video";
+import HangupButton from "../buttons/hangup";
 
 export function Controls() {
   const [videoMuted, setVideoMuted] = useState(false);
@@ -25,6 +26,7 @@ export function Controls() {
           muted={videoMuted}
           onClick={videoClick}
         ></VideoToggleButton>
+        <HangupButton></HangupButton>
       </div>
     </div>
   );
