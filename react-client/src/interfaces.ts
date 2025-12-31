@@ -29,3 +29,11 @@ export interface iMiniVideoProps {
   changeMainStream: Function;
   key: Number;
 }
+
+export interface iControls {
+  leaveConference: Function;
+}
+
+export interface iLeaveConference {
+  leaveConference: Function;
+}

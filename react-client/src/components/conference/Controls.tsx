@@ -2,8 +2,9 @@ import { useState } from "react";
 import MicToggleButton from "../buttons/mic";
 import VideoToggleButton from "../buttons/video";
 import HangupButton from "../buttons/hangup";
+import { iControls } from "../../interfaces";
 
-export function Controls() {
+export function Controls({ leaveConference }: iControls) {
   const [videoMuted, setVideoMuted] = useState(false);
   const [audioMuted, setAudioMuted] = useState(false);
 
@@ -26,7 +27,7 @@ export function Controls() {
           muted={videoMuted}
           onClick={videoClick}
         ></VideoToggleButton>
-        <HangupButton></HangupButton>
+        <HangupButton leaveConference={leaveConference}></HangupButton>
       </div>
     </div>
   );

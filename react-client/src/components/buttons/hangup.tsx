@@ -1,15 +1,7 @@
 import { PhoneOff } from "lucide-react";
-import { ConferenceContext } from "../../App";
-import React, { useContext } from "react";
-import { iConferenceContext } from "../../interfaces";
+import { iLeaveConference } from "../../interfaces";
 
-export default function HangupButton() {
-  const { stream }: iConferenceContext = useContext(ConferenceContext);
-
-  function hangup(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
-    //Leave conference
-  }
-
+export default function HangupButton({ leaveConference }: iLeaveConference) {
   return (
     <button
       className="
@@ -18,7 +10,7 @@ export default function HangupButton() {
         bg-red-500 hover:bg-red-600
         "
       onClick={(e) => {
-        hangup(e);
+        leaveConference();
       }}
     >
       <PhoneOff size={40} />

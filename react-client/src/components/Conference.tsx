@@ -44,22 +44,27 @@ export function InConference({ name }: iInConference) {
     setListeners(conference);
 
     console.log("[FRONT] Publish local stream");
-    conference.publish(stream!);
+    if (stream) {
+      conference.publish(stream);
+    }
 
     return () => {
       conference.leave();
     };
   }, [conference]);
 
+  //TODO Clear screen
+  //TODO Set state see App.tsx
+  function leaveConference() {
+    if (!conference) return;
+    conference.leave();
+  }
+
   function setListeners(conf: Conference) {
     conf.addEventListener("newstream", newstream);
     conf.addEventListener("newPeople", newPeople);
     conf.addEventListener("peopleLeave", peopleLeave);
   }
-
-  useEffect(() => {
-    //console.log(streams);
-  }, [streams]);
 
   function newPeople(e: any) {
     const newContact = new Contact(e.detail.contact.id, e.detail.contact.name);
@@ -103,7 +108,7 @@ export function InConference({ name }: iInConference) {
 
   return (
     <div className="text-white bg-stone-900 w-full h-screen flex justify-center items-center flex-col">
-      <Controls></Controls>
+      <Controls leaveConference={leaveConference}></Controls>
       <StreamDrawer streams={streams} setStreams={setStreams}></StreamDrawer>
     </div>
   );
