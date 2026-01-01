@@ -12,7 +12,7 @@ import { iConferenceContext } from "../interfaces";
  * @param props name
  * @returns
  */
-export function InConference({ name }: iInConference) {
+export function InConference({ name, leaveConference }: iInConference) {
   const { stream, setStream }: iConferenceContext =
     useContext(ConferenceContext);
 
@@ -54,10 +54,10 @@ export function InConference({ name }: iInConference) {
   }, [conference]);
 
   //TODO Clear screen
-  //TODO Set state see App.tsx
-  function leaveConference() {
+  function leaveConferenceAction() {
     if (!conference) return;
     conference.leave();
+    leaveConference();
   }
 
   function setListeners(conf: Conference) {
@@ -108,7 +108,7 @@ export function InConference({ name }: iInConference) {
 
   return (
     <div className="text-white bg-stone-900 w-full h-screen flex justify-center items-center flex-col">
-      <Controls leaveConference={leaveConference}></Controls>
+      <Controls leaveConference={leaveConferenceAction}></Controls>
       <StreamDrawer streams={streams} setStreams={setStreams}></StreamDrawer>
     </div>
   );

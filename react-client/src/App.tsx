@@ -42,6 +42,10 @@ function App() {
     setCurrentState(States.Conference);
   }
 
+  function leaveConference() {
+    setCurrentState(States.End);
+  }
+
   function showStates(): JSX.Element {
     switch (currentState) {
       case States.Configuration:
@@ -53,7 +57,12 @@ function App() {
           ></PreviewScreen>
         );
       case States.Conference:
-        return <InConference name={name}></InConference>;
+        return (
+          <InConference
+            name={name}
+            leaveConference={leaveConference}
+          ></InConference>
+        );
       case States.End:
         return <div>end</div>;
       default:

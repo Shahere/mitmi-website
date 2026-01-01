@@ -8,6 +8,7 @@ export interface iPreviewScreen {
 
 export interface iInConference {
   name: string;
+  leaveConference: Function;
 }
 
 export interface iConferenceContext {
