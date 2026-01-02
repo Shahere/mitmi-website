@@ -6,6 +6,7 @@ import { Controls } from "./conference/Controls";
 import { Session } from "mitmi";
 import { iInConference } from "../interfaces";
 import { iConferenceContext } from "../interfaces";
+import LoadConference from "./LoadConference";
 
 /**
  *
@@ -103,7 +104,7 @@ export function InConference({ name, leaveConference }: iInConference) {
   }
 
   if (loading) {
-    return <div>Connexion en cours...</div>;
+    return <LoadConference />;
   }
 
   return (
