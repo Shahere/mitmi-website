@@ -2,6 +2,7 @@ import { createContext, JSX, useState, useEffect } from "react";
 import "./App.css";
 import { PreviewScreen } from "./components/PreviewScreen";
 import { InConference } from "./components/Conference";
+import { EndConference } from "./components/EndConference";
 import { DeviceManager, Stream } from "mitmi";
 import { iConferenceContext } from "./interfaces";
 
@@ -64,7 +65,7 @@ function App() {
           ></InConference>
         );
       case States.End:
-        return <div>end</div>;
+        return <EndConference></EndConference>;
       default:
         return <div>404</div>;
     }
