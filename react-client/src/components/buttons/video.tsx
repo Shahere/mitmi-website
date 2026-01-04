@@ -15,9 +15,9 @@ export default function VideoToggleButton({
 
   function disableVideo(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
     if (muted) {
-      stream?.unmuteVideo();
+      stream?.globalUnmuteVideo();
     } else {
-      stream?.muteVideo();
+      stream?.globalMuteVideo();
     }
 
     onClick(e);
