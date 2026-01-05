@@ -6,7 +6,13 @@ import { Controls } from "./conference/Controls";
 import { Session } from "mitmi";
 import { iInConference } from "../interfaces";
 import { iConferenceContext } from "../interfaces";
+import { SelectDisplayConference } from "./conference/SelectDisplayConference";
 import LoadConference from "./LoadConference";
+
+export enum DisplayConference {
+  Drawer,
+  Panel,
+}
 
 /**
  *
@@ -21,6 +27,9 @@ export function InConference({ name, leaveConference }: iInConference) {
   const [session, setSession] = useState<Session | null>(null);
   const [conference, setConference] = useState<Conference | null>(null);
   const [loading, setLoading] = useState(true);
+  const [displayConference, setDisplayConference] = useState(
+    DisplayConference.Drawer
+  );
 
   useEffect(() => {
     async function init() {
@@ -110,6 +119,10 @@ export function InConference({ name, leaveConference }: iInConference) {
   return (
     <div className="text-white bg-stone-900 w-full h-screen flex justify-center items-center flex-col">
       <Controls leaveConference={leaveConferenceAction}></Controls>
+      <SelectDisplayConference
+        displayConference={displayConference}
+        setDisplayConference={setDisplayConference}
+      ></SelectDisplayConference>
       <StreamDrawer streams={streams} setStreams={setStreams}></StreamDrawer>
     </div>
   );

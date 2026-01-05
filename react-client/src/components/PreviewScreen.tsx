@@ -107,7 +107,7 @@ export function PreviewScreen({
 
   return (
     <div className="text-white bg-stone-900 w-full min-h-screen pt-10 pb-10 flex items-center flex-col">
-      <h2 className="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
+      <h2 className="mb-4 text-4xl font-extrabold leading-none tracking-tight md:text-5xl lg:text-6xl text-white">
         Preview
       </h2>
 

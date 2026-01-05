@@ -55,7 +55,7 @@ export function StreamDrawer({ streams, setStreams }: iStreamsDrawerProps) {
         className="w-screen h-screen object-cover"
       />
       <div
-        className={`absolute right-[5%] ${mainVideoNamePosition()} size-fit px-[2%] py-[1%] rounded-2xl font-bold text-xl bg-gray-800/40 backdrop-blur-[4px] z-[99]`}
+        className={`absolute right-[10%] ${mainVideoNamePosition()} size-fit px-[2%] py-[1%] rounded-2xl font-bold text-xl bg-gray-800/40 backdrop-blur-[4px] z-[99]`}
       >
         <p ref={mainVideoNameRef} className="white">
           Name

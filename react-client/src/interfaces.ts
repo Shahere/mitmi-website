@@ -1,4 +1,5 @@
 import { Stream, DeviceManager } from "mitmi";
+import { DisplayConference } from "./components/Conference";
 
 export interface iPreviewScreen {
   name: string;
@@ -37,4 +38,9 @@ export interface iControls {
 
 export interface iLeaveConference {
   leaveConference: Function;
+}
+
+export interface iDisplayConference {
+  displayConference: DisplayConference;
+  setDisplayConference: React.Dispatch<React.SetStateAction<DisplayConference>>;
 }
