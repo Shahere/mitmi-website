@@ -112,6 +112,17 @@ export function InConference({ name, leaveConference }: iInConference) {
     });
   }
 
+  function displayStreams() {
+    if (displayConference === DisplayConference.Drawer) {
+      return (
+        <StreamDrawer streams={streams} setStreams={setStreams}></StreamDrawer>
+      );
+    }
+    if (displayConference === DisplayConference.Panel) {
+      return <p>Panel</p>;
+    }
+  }
+
   if (loading) {
     return <LoadConference />;
   }
@@ -123,7 +134,7 @@ export function InConference({ name, leaveConference }: iInConference) {
         displayConference={displayConference}
         setDisplayConference={setDisplayConference}
       ></SelectDisplayConference>
-      <StreamDrawer streams={streams} setStreams={setStreams}></StreamDrawer>
+      {displayStreams()}
     </div>
   );
 }

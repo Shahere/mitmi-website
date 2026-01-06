@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { iDisplayConference } from "../../interfaces";
 import { DisplayConference } from "../Conference";
 import { PanelTopBottomDashed, PanelBottomOpen } from "lucide-react";
@@ -7,6 +7,10 @@ export function SelectDisplayConference({
   displayConference,
   setDisplayConference,
 }: iDisplayConference) {
+  useEffect(() => {
+    console.log(displayConference === DisplayConference.Drawer);
+    console.log(displayConference === DisplayConference.Panel);
+  }, []);
   return (
     <div className="absolute z-[99] bottom-[3%] right-[1%]">
       <div className="flex items-center gap-2 rounded-2xl bg-muted p-1 shadow-sm">
@@ -14,14 +18,14 @@ export function SelectDisplayConference({
           active={displayConference === DisplayConference.Panel}
           onClick={() => setDisplayConference(DisplayConference.Panel)}
         >
-          <PanelBottomOpen className="h-5 w-5" />
+          <PanelTopBottomDashed className="h-5 w-5" />
         </ToggleButton>
 
         <ToggleButton
           active={displayConference === DisplayConference.Drawer}
           onClick={() => setDisplayConference(DisplayConference.Drawer)}
         >
-          <PanelTopBottomDashed className="h-5 w-5" />
+          <PanelBottomOpen className="h-5 w-5" />
         </ToggleButton>
       </div>
     </div>
