@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { ConferenceContext } from "../App";
 import { Conference, Contact, Stream } from "mitmi";
 import { StreamDrawer } from "./conference/StreamDrawer";
+import { StreamPanel } from "./conference/StreamPanel";
 import { Controls } from "./conference/Controls";
 import { Session } from "mitmi";
 import { iInConference } from "../interfaces";
@@ -119,7 +120,9 @@ export function InConference({ name, leaveConference }: iInConference) {
       );
     }
     if (displayConference === DisplayConference.Panel) {
-      return <p>Panel</p>;
+      return (
+        <StreamPanel streams={streams} setStreams={setStreams}></StreamPanel>
+      );
     }
   }
 

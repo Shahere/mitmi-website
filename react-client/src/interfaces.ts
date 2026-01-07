@@ -31,6 +31,10 @@ export interface iMiniVideoProps {
   changeMainStream: Function;
   key: Number;
 }
+export interface iMiniVideoPanelProps {
+  stream: Stream;
+  key: Number;
+}
 
 export interface iControls {
   leaveConference: Function;
