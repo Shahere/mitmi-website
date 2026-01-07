@@ -7,10 +7,6 @@ export function SelectDisplayConference({
   displayConference,
   setDisplayConference,
 }: iDisplayConference) {
-  useEffect(() => {
-    console.log(displayConference === DisplayConference.Drawer);
-    console.log(displayConference === DisplayConference.Panel);
-  }, []);
   return (
     <div className="absolute z-[99] bottom-[3%] right-[1%]">
       <div className="flex items-center gap-2 rounded-2xl bg-muted p-1 shadow-sm">
