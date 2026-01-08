@@ -9,7 +9,7 @@ export function MiniVideoPanel({ stream }: iMiniVideoPanelProps) {
   }, [stream]);
 
   return (
-    <div className="relative h-[20%] w-[20%] rounded-lg border border-white/30 overflow-hidden">
+    <div className="relative rounded-lg border border-white/30 overflow-hidden">
       <video
         ref={ref}
         autoPlay
