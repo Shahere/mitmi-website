@@ -17,7 +17,7 @@ export function Controls({ leaveConference }: iControls) {
   }
 
   return (
-    <div className="absolute z-[99] top-0 left-0 w-screen p-[2%]">
+    <div className="fixed z-[99] top-0 left-0 w-screen p-[2%]">
       <div className="flex justify-center gap-10">
         <MicToggleButton
           muted={audioMuted}

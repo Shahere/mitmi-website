@@ -131,7 +131,7 @@ export function InConference({ name, leaveConference }: iInConference) {
   }
 
   return (
-    <div className="text-white bg-stone-900 w-full h-screen flex justify-center items-center flex-col">
+    <div className="text-white bg-stone-900 w-full h-full flex justify-center items-center flex-col">
       <Controls leaveConference={leaveConferenceAction}></Controls>
       <SelectDisplayConference
         displayConference={displayConference}

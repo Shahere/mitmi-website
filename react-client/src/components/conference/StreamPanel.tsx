@@ -22,16 +22,8 @@ export function StreamPanel({ streams, setStreams }: iStreamsDrawerProps) {
   }, [streams]);
 
   return (
-    <div className="relative w-screen h-screen bg-black flex items-center justify-center">
-      <div
-        className="
-      grid grid-cols-4 grid-rows-3 gap-2
-      sm:grid-cols-2 lg:grid-cols-4
-
-      w-full max-w-[90%]
-      h-full max-h-[75vh]
-    "
-      >
+    <div className="relative w-screen min-h-screen bg-black flex items-center justify-center">
+      <div className="flex flex-wrap items-center justify-center">
         {visibleStreams.map((stream, index) => (
           <MiniVideoPanel key={index} stream={stream} />
         ))}
