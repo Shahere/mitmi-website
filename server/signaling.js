@@ -51,11 +51,15 @@ io.on("connection", (socket) => {
         - ice-candidate 
       */
       console.info("This is a broadcast message");
+      if (message.payload.action == "close") {
+        closePeer(socket);
+      }
       socket.broadcast.emit("message", message);
-    }
-    console.info("Message is from a specific user");
+    } else {
+      console.info("Message is from a specific user");
 
-    io.to(message.target).emit("message", message);
+      io.to(message.target).emit("message", message);
+    }
     //console.log("Broadcast message send");
   });
 
@@ -63,16 +67,17 @@ io.on("connection", (socket) => {
     const disconnectingPeer = connections.find((peer) => peer === socket.id);
     if (disconnectingPeer) {
       console.log("Disconnected", disconnectingPeer);
-      /*const payload = {
-        action: "close",
-        disconnect: disconnectingPeer,
-        message: "Peer has left the signaling server",
-      };
-      // Make all peers close their peer channels
-      socket.broadcast.emit("message", { payload: payload });*/
-      // remove disconnecting peer from connections
       const indexDisconnectingPeer = connections.indexOf(disconnectingPeer);
       if (indexDisconnectingPeer > -1) {
+        console.log("CLOSE message has not been sent");
+        //CLOSE message has not been sent
+        const payload = {
+          action: "close",
+          disconnect: disconnectingPeer,
+          message: "Peer has left the signaling server",
+        };
+        // Make all peers close their peer channels
+        socket.broadcast.emit("message", { payload: payload });
         connections.splice(indexDisconnectingPeer);
       }
     } else {
@@ -80,6 +85,20 @@ io.on("connection", (socket) => {
     }
   });
 });
+
+function closePeer(socket) {
+  const disconnectingPeer = connections.find((peer) => peer === socket.id);
+  if (disconnectingPeer) {
+    console.log("Disconnected", disconnectingPeer);
+    // remove disconnecting peer from connections
+    const indexDisconnectingPeer = connections.indexOf(disconnectingPeer);
+    if (indexDisconnectingPeer > -1) {
+      connections.splice(indexDisconnectingPeer);
+    }
+  } else {
+    console.log(socket.id, "has disconnected");
+  }
+}
 
 // RUN APP
 server.listen(PORT, console.log(`Listening on PORT ${PORT}`));
