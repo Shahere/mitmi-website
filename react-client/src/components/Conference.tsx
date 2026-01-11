@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { ConferenceContext } from "../App";
 import { Conference, Contact, Stream } from "mitmi";
 import { StreamDrawer } from "./conference/StreamDrawer";
@@ -32,6 +32,8 @@ export function InConference({ name, leaveConference }: iInConference) {
     DisplayConference.Drawer
   );
 
+  const conferenceRef = useRef<Conference | null>(null);
+
   useEffect(() => {
     async function init() {
       try {
@@ -39,6 +41,7 @@ export function InConference({ name, leaveConference }: iInConference) {
         setSession(createdSession);
         const conf = new Conference("test", createdSession);
         setConference(conf);
+        conferenceRef.current = conf;
         setLoading(false);
       } catch (err) {
         console.error("Erreur init session/conf", err);
@@ -46,7 +49,15 @@ export function InConference({ name, leaveConference }: iInConference) {
     }
 
     init();
-    return () => {};
+    const handleUnload = () => {
+      if (conferenceRef.current) conferenceRef.current.leave();
+    };
+    window.addEventListener("beforeunload", handleUnload); //handle window close/tab close
+
+    return () => {
+      window.removeEventListener("beforeunload", handleUnload);
+      if (conferenceRef.current) conferenceRef.current.leave();
+    };
   }, []);
 
   useEffect(() => {
@@ -64,7 +75,6 @@ export function InConference({ name, leaveConference }: iInConference) {
     };
   }, [conference]);
 
-  //TODO Clear screen
   function leaveConferenceAction() {
     if (!conference) return;
     conference.leave();
@@ -105,7 +115,7 @@ export function InConference({ name, leaveConference }: iInConference) {
   }
 
   function peopleLeave(e: any) {
-    console.log("[FRONT] People leave : " + e.detail.leaveId);
+    console.log("[FRONT] People leave : " + e.detail.name);
     setStreams((prev) => {
       return prev.filter((item) => {
         return item.ownerId !== e.detail.leaveId;

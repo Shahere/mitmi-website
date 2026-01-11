@@ -63,13 +63,13 @@ io.on("connection", (socket) => {
     const disconnectingPeer = connections.find((peer) => peer === socket.id);
     if (disconnectingPeer) {
       console.log("Disconnected", disconnectingPeer);
-      const payload = {
+      /*const payload = {
         action: "close",
         disconnect: disconnectingPeer,
         message: "Peer has left the signaling server",
       };
       // Make all peers close their peer channels
-      socket.broadcast.emit("message", { payload: payload });
+      socket.broadcast.emit("message", { payload: payload });*/
       // remove disconnecting peer from connections
       const indexDisconnectingPeer = connections.indexOf(disconnectingPeer);
       if (indexDisconnectingPeer > -1) {
