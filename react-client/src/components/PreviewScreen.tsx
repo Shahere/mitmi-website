@@ -24,7 +24,13 @@ export function PreviewScreen({
   const nameRef = useRef<HTMLTextAreaElement>(null);
 
   const [audioInput, setAudioInput] = useState<MediaDeviceInfo[]>([]);
+  const [stringCurrentAudioInput, setStringCurrentAudioInput] = useState(
+    "Autorisations non accordées.",
+  );
   const [videoInput, setVideoInput] = useState<MediaDeviceInfo[]>([]);
+  const [stringCurrentVideoInput, setStringCurrentVideoInput] = useState(
+    "Autorisations non accordées.",
+  );
 
   const {
     stream,
@@ -36,6 +42,18 @@ export function PreviewScreen({
   useEffect(() => {
     let deviceManager = DeviceManager.createInstance();
     setDeviceManager(deviceManager);
+    const getDevices = async () => {
+      const deviceStream = await Stream.getCamera(true, true);
+      const videoDevices =
+        await deviceManager.getAvailableDevices("videoinput");
+      setVideoInput(videoDevices);
+      const audioDevices =
+        await deviceManager.getAvailableDevices("audioinput");
+      setVideoInput(audioDevices);
+      console.log(audioDevices);
+      deviceStream.stop();
+    };
+    getDevices();
   }, []);
 
   useEffect(() => {
@@ -229,7 +247,7 @@ export function PreviewScreen({
                     <div className="text-[13px] text-[#a9c7f7]">Audio</div>
 
                     <div className="text-[14px] text-[#77778b] mt-0.5">
-                      Autorisations non accordées.
+                      {stringCurrentAudioInput}
                     </div>
                   </div>
 
@@ -259,7 +277,7 @@ export function PreviewScreen({
                     <div className="text-[13px] text-[#a9c7f7]">Vidéo</div>
 
                     <div className="text-[14px] text-[#77778b] mt-0.5">
-                      Autorisations non accordées.
+                      {stringCurrentVideoInput}
                     </div>
                   </div>
 
@@ -288,7 +306,10 @@ export function PreviewScreen({
                   Your name
                 </label>
               </div>
-              <button className="rounded-3xl mt-5 relative inline-flex items-center justify-center p-0.5 overflow-hidden text-sm font-medium text-heading rounded-base group bg-gradient-to-br from-cyan-500 to-blue-500 group-hover:from-cyan-500 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-800">
+              <button
+                onClick={joinConferenceAction}
+                className="rounded-3xl mt-5 relative inline-flex items-center justify-center p-0.5 overflow-hidden text-sm font-medium text-heading rounded-base group bg-gradient-to-br from-cyan-500 to-blue-500 group-hover:from-cyan-500 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-800"
+              >
                 <span className="relative px-4 py-2.5 transition-all ease-in duration-75 bg-neutral-primary-soft rounded-base group-hover:bg-transparent group-hover:dark:bg-transparent leading-5">
                   Join conference
                 </span>
