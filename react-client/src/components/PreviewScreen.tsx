@@ -18,10 +18,6 @@ export function PreviewScreen({
   joinConference,
 }: iPreviewScreen) {
   const localStreamRef = useRef<HTMLVideoElement>(null);
-  const errorNoStreamRef = useRef<HTMLDivElement>(null);
-  const errorNoNameRef = useRef<HTMLDivElement>(null);
-  const errorRef = useRef<HTMLDivElement>(null);
-  const nameRef = useRef<HTMLTextAreaElement>(null);
 
   const [audioInput, setAudioInput] = useState<MediaDeviceInfo[]>([]);
   const [stringCurrentAudioInput, setStringCurrentAudioInput] = useState(
@@ -43,15 +39,30 @@ export function PreviewScreen({
     let deviceManager = DeviceManager.createInstance();
     setDeviceManager(deviceManager);
     const getDevices = async () => {
-      const deviceStream = await Stream.getCamera(true, true);
-      const videoDevices =
-        await deviceManager.getAvailableDevices("videoinput");
-      setVideoInput(videoDevices);
-      const audioDevices =
-        await deviceManager.getAvailableDevices("audioinput");
-      setVideoInput(audioDevices);
-      console.log(audioDevices);
-      deviceStream.stop();
+      try {
+        const deviceStream = await Stream.getCamera(true, true);
+        const videoDevices =
+          await deviceManager.getAvailableDevices("videoinput");
+        setVideoInput(videoDevices);
+        const audioDevices =
+          await deviceManager.getAvailableDevices("audioinput");
+        setVideoInput(audioDevices);
+        const currentAudioDevice = audioDevices.find(
+          (device) =>
+            device.deviceId == deviceManager.getCurrentDevices().audioInput!,
+        );
+        const currentVideoDevice = videoDevices.find(
+          (device) =>
+            device.deviceId == deviceManager.getCurrentDevices().videoInput!,
+        );
+        setStringCurrentAudioInput(currentAudioDevice?.label!);
+        setStringCurrentVideoInput(currentVideoDevice?.label!);
+
+        deviceStream.stop();
+        startLocalStream();
+      } catch (error) {
+        console.error(error);
+      }
     };
     getDevices();
   }, []);
@@ -77,8 +88,6 @@ export function PreviewScreen({
     if (stream) return;
     let localStreamPre = await Stream.getCamera(true, true);
     setStream(localStreamPre);
-    errorNoStreamRef.current!.style.display = "none";
-    errorRef.current!.style.display = "none";
 
     if (localStreamRef.current) {
       localStreamPre.attachToElement(localStreamRef.current);
@@ -92,16 +101,6 @@ export function PreviewScreen({
   }
 
   function joinConferenceAction() {
-    if (!stream) {
-      errorNoStreamRef.current!.style.display = "block";
-      errorRef.current!.style.display = "block";
-      return;
-    }
-    if (!name) {
-      errorNoNameRef.current!.style.display = "block";
-      errorRef.current!.style.display = "block";
-      return;
-    }
     setStream((prev) => {
       const newLocalStream = prev;
       if (!newLocalStream) return prev;
@@ -112,8 +111,6 @@ export function PreviewScreen({
   }
 
   function changeName(changeVal: string) {
-    errorNoNameRef.current!.style.display = "none";
-    errorRef.current!.style.display = "none";
     setName(changeVal);
   }
 
@@ -148,7 +145,23 @@ export function PreviewScreen({
           <div className="flex items-center justify-center p-8 w-[100%]">
             <div className="w-[75%]">
               {/* Zone vidéo */}
-              <div className="relative h-[370px] rounded-[32px] bg-gradient-to-b from-[#5a3e30] to-[#35241c] overflow-hidden">
+              <div
+                className="
+    relative
+    h-[370px]
+    rounded-[32px]
+    bg-gradient-to-b from-[#5a3e30] to-[#35241c]
+    overflow-hidden
+  "
+              >
+                {/* Vidéo */}
+                <video
+                  ref={localStreamRef}
+                  className="absolute inset-0 w-full h-full object-cover"
+                  autoPlay
+                  playsInline
+                />
+
                 {/* Avatar */}
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="w-20 h-20 rounded-full bg-[#ffb15b]" />
@@ -160,29 +173,29 @@ export function PreviewScreen({
                   <div className="relative">
                     <button
                       className="
-                  w-[54px] h-[54px]
-                  rounded-full
-                  border border-[#77706c]
-                  bg-[#44372f]/70
-                  flex items-center justify-center
-                  text-white
-                  hover:bg-[#51433a]
-                  transition
-                "
+          w-[54px] h-[54px]
+          rounded-full
+          border border-[#77706c]
+          bg-[#44372f]/70
+          flex items-center justify-center
+          text-white
+          hover:bg-[#51433a]
+          transition
+        "
                     >
                       <MicOff size={21} strokeWidth={1.8} />
                     </button>
 
                     <span
                       className="
-                  absolute -right-1 -top-1
-                  w-6 h-6
-                  rounded-full
-                  bg-[#ff4549]
-                  text-white
-                  text-[11px]
-                  flex items-center justify-center
-                "
+          absolute -right-1 -top-1
+          w-6 h-6
+          rounded-full
+          bg-[#ff4549]
+          text-white
+          text-[11px]
+          flex items-center justify-center
+        "
                     >
                       !
                     </span>
@@ -192,29 +205,29 @@ export function PreviewScreen({
                   <div className="relative">
                     <button
                       className="
-                  w-[54px] h-[54px]
-                  rounded-full
-                  border border-[#77706c]
-                  bg-[#44372f]/70
-                  flex items-center justify-center
-                  text-white
-                  hover:bg-[#51433a]
-                  transition
-                "
+          w-[54px] h-[54px]
+          rounded-full
+          border border-[#77706c]
+          bg-[#44372f]/70
+          flex items-center justify-center
+          text-white
+          hover:bg-[#51433a]
+          transition
+        "
                     >
                       <VideoOff size={21} strokeWidth={1.8} />
                     </button>
 
                     <span
                       className="
-                  absolute -right-1 -top-1
-                  w-6 h-6
-                  rounded-full
-                  bg-[#ff4549]
-                  text-white
-                  text-[11px]
-                  flex items-center justify-center
-                "
+          absolute -right-1 -top-1
+          w-6 h-6
+          rounded-full
+          bg-[#ff4549]
+          text-white
+          text-[11px]
+          flex items-center justify-center
+        "
                     >
                       !
                     </span>
