@@ -28,6 +28,9 @@ export function PreviewScreen({
     "Autorisations non accordées.",
   );
 
+  const [isAudioEnable, setIsAudioEnable] = useState<Boolean>(false);
+  const [isVideoEnable, setIsVideoEnable] = useState<Boolean>(false);
+
   const {
     stream,
     setStream,
@@ -78,6 +81,8 @@ export function PreviewScreen({
     });
 
     stream.attachToElement(localStreamRef.current!);
+    setIsAudioEnable(true);
+    setIsVideoEnable(true);
 
     return () => {
       stream.detachToElement();
@@ -132,6 +137,52 @@ export function PreviewScreen({
     setStream(newStream);
   }
 
+  function switchAudio() {
+    setIsAudioEnable((prev) => !prev);
+  }
+
+  function switchVideo() {
+    setIsVideoEnable((prev) => !prev);
+  }
+
+  function showWarning(type: "audio" | "video") {
+    if (type == "audio" && !isAudioEnable) {
+      return (
+        <span
+          className="
+          absolute -right-1 -top-1
+          w-6 h-6
+          rounded-full
+          bg-[#ff4549]
+          text-white
+          text-[11px]
+          flex items-center justify-center
+        "
+        >
+          !
+        </span>
+      );
+    }
+
+    if (type == "video" && !isVideoEnable) {
+      return (
+        <span
+          className="
+          absolute -right-1 -top-1
+          w-6 h-6
+          rounded-full
+          bg-[#ff4549]
+          text-white
+          text-[11px]
+          flex items-center justify-center
+        "
+        >
+          !
+        </span>
+      );
+    }
+  }
+
   return (
     <div className="text-white bg-stone-900 w-full h-screen pt-10 flex items-center flex-col">
       <div className="w-full flex justify-center">
@@ -168,7 +219,7 @@ export function PreviewScreen({
                 </div>
 
                 {/* Contrôles */}
-                <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-2 z-5">
+                <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-2 z-20">
                   {/* Micro */}
                   <div className="relative">
                     <button
@@ -182,23 +233,13 @@ export function PreviewScreen({
           hover:bg-[#51433a]
           transition
         "
+                      onClick={() => {
+                        switchAudio();
+                      }}
                     >
                       <MicOff size={21} strokeWidth={1.8} />
                     </button>
-
-                    <span
-                      className="
-          absolute -right-1 -top-1
-          w-6 h-6
-          rounded-full
-          bg-[#ff4549]
-          text-white
-          text-[11px]
-          flex items-center justify-center
-        "
-                    >
-                      !
-                    </span>
+                    {showWarning("audio")}
                   </div>
 
                   {/* Caméra */}
@@ -214,23 +255,13 @@ export function PreviewScreen({
           hover:bg-[#51433a]
           transition
         "
+                      onClick={() => {
+                        switchVideo();
+                      }}
                     >
                       <VideoOff size={21} strokeWidth={1.8} />
                     </button>
-
-                    <span
-                      className="
-          absolute -right-1 -top-1
-          w-6 h-6
-          rounded-full
-          bg-[#ff4549]
-          text-white
-          text-[11px]
-          flex items-center justify-center
-        "
-                    >
-                      !
-                    </span>
+                    {showWarning("video")}
                   </div>
                 </div>
               </div>
