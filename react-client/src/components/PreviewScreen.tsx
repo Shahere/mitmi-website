@@ -99,12 +99,6 @@ export function PreviewScreen({
     }
   }
 
-  function stopLocalStream() {
-    if (!stream) return;
-    stream.detachToElement();
-    setStream(undefined);
-  }
-
   function joinConferenceAction() {
     setStream((prev) => {
       const newLocalStream = prev;
@@ -139,10 +133,20 @@ export function PreviewScreen({
 
   function switchAudio() {
     setIsAudioEnable((prev) => !prev);
+    if (isAudioEnable) {
+      stream?.globalMuteAudio();
+    } else {
+      stream?.globalUnmuteAudio();
+    }
   }
 
   function switchVideo() {
     setIsVideoEnable((prev) => !prev);
+    if (isVideoEnable) {
+      stream?.globalMuteVideo();
+    } else {
+      stream?.globalUnmuteVideo();
+    }
   }
 
   function showWarning(type: "audio" | "video") {
@@ -280,6 +284,9 @@ export function PreviewScreen({
               hover:bg-[#1b1b25]
               transition
             "
+                  onClick={() => {
+                    console.log("SHOW LIST");
+                  }}
                 >
                   <Mic
                     size={21}
