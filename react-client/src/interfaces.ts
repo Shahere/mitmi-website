@@ -68,3 +68,8 @@ export interface iDisplayConference {
   displayConference: DisplayConference;
   setDisplayConference: React.Dispatch<React.SetStateAction<DisplayConference>>;
 }
+
+export interface iAudioDropList {
+  setStream: React.Dispatch<React.SetStateAction<Stream | undefined>>;
+  audioInput: MediaDeviceInfo[];
+}
