@@ -73,3 +73,8 @@ export interface iAudioDropList {
   setStream: React.Dispatch<React.SetStateAction<Stream | undefined>>;
   audioInput: MediaDeviceInfo[];
 }
+
+export interface iVideoDropList {
+  setStream: React.Dispatch<React.SetStateAction<Stream | undefined>>;
+  videoInput: MediaDeviceInfo[];
+}
