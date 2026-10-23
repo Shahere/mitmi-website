@@ -1,5 +1,6 @@
 import { Stream, DeviceManager } from "mitmi";
 import { DisplayConference } from "./components/Conference";
+import { RefObject } from "react";
 
 export interface iPreviewScreen {
   name: string;
@@ -77,4 +78,9 @@ export interface iAudioDropList {
 export interface iVideoDropList {
   setStream: React.Dispatch<React.SetStateAction<Stream | undefined>>;
   videoInput: MediaDeviceInfo[];
+}
+
+export interface iAvatar {
+  localStreamRef: RefObject<HTMLVideoElement | null>;
+  stream: Stream | undefined;
 }
