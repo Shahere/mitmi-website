@@ -8,20 +8,22 @@ export function Avatar({ localStreamRef, stream }: iAvatar) {
   const [isVideoEnable, setIsVideoEnable] = useState<Boolean>(false);
 
   function switchAudio() {
+    if (!stream) return;
     setIsAudioEnable((prev) => !prev);
     if (isAudioEnable) {
-      stream?.globalMuteAudio();
+      stream.globalMuteAudio();
     } else {
-      stream?.globalUnmuteAudio();
+      stream.globalUnmuteAudio();
     }
   }
 
   function switchVideo() {
+    if (!stream) return;
     setIsVideoEnable((prev) => !prev);
     if (isVideoEnable) {
-      stream?.globalMuteVideo();
+      stream.globalMuteVideo();
     } else {
-      stream?.globalUnmuteVideo();
+      stream.globalUnmuteVideo();
     }
   }
 
