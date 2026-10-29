@@ -27,14 +27,11 @@ export function PreviewScreen({
   const [stringCurrentAudioInput, setStringCurrentAudioInput] = useState(
     "Autorisations non accordées.",
   );
-  const [isAudioListOpen, setIsAudioListOpen] = useState(false);
 
   const [videoInput, setVideoInput] = useState<MediaDeviceInfo[]>([]);
   const [stringCurrentVideoInput, setStringCurrentVideoInput] = useState(
     "Autorisations non accordées.",
   );
-  const [isVideoListOpen, setIsVideoListOpen] = useState(false);
-
   const [isAudioEnable, setIsAudioEnable] = useState<Boolean>(false);
   const [isVideoEnable, setIsVideoEnable] = useState<Boolean>(false);
 
@@ -114,26 +111,6 @@ export function PreviewScreen({
       return newLocalStream;
     });
     joinConference();
-  }
-
-  function changeName(changeVal: string) {
-    setName(changeVal);
-  }
-
-  function changeHub(changeVal: string) {
-    setHub(changeVal);
-  }
-
-  async function changeAudioInput(selectedDevice: MediaDeviceInfo) {
-    if (!deviceManager) return;
-    const newStream = await deviceManager.changeAudioDevice(selectedDevice);
-    setStream(newStream);
-  }
-
-  async function changeVideoInput(selectedDevice: MediaDeviceInfo) {
-    if (!deviceManager) return;
-    const newStream = await deviceManager.changeVideoDevice(selectedDevice);
-    setStream(newStream);
   }
 
   return (
