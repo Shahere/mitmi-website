@@ -147,6 +147,7 @@ export function PreviewScreen({
             <div className="x-fit">
               <div className="relative h-11 w-[50%] min-w-[200px] left-[50%] translate-x-[-50%] mt-10">
                 <input
+                  onChange={(e) => setName(e.target.value)}
                   className="peer h-full w-full border-b border-blue-gray-200 bg-transparent pt-4 pb-1.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border-blue-gray-200 focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                   placeholder=" "
                 />
@@ -157,6 +158,7 @@ export function PreviewScreen({
 
               <div className="relative h-11 w-[50%] min-w-[200px] left-[50%] translate-x-[-50%] mt-10">
                 <input
+                  onChange={(e) => setHub(e.target.value)}
                   className="peer h-full w-full border-b border-blue-gray-200 bg-transparent pt-4 pb-1.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border-blue-gray-200 focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                   placeholder=" "
                 />
