@@ -3,10 +3,14 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import { MicOff, VideoOff, Mic, Video, ChevronDown } from "lucide-react";
 import { iAvatar } from "../../interfaces";
 
-export function Avatar({ localStreamRef, stream }: iAvatar) {
-  const [isAudioEnable, setIsAudioEnable] = useState<Boolean>(false);
-  const [isVideoEnable, setIsVideoEnable] = useState<Boolean>(false);
-
+export function Avatar({
+  localStreamRef,
+  stream,
+  isAudioEnable,
+  setIsAudioEnable,
+  isVideoEnable,
+  setIsVideoEnable,
+}: iAvatar) {
   function switchAudio() {
     if (!stream) return;
     setIsAudioEnable((prev) => !prev);

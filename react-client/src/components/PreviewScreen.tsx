@@ -126,7 +126,14 @@ export function PreviewScreen({
           <div className="flex items-center justify-center p-8 w-[100%]">
             <div className="w-[75%]">
               {/* Zone vidéo */}
-              <Avatar localStreamRef={localStreamRef} stream={stream}></Avatar>
+              <Avatar
+                localStreamRef={localStreamRef}
+                stream={stream}
+                isAudioEnable={isAudioEnable}
+                setIsAudioEnable={setIsAudioEnable}
+                isVideoEnable={isVideoEnable}
+                setIsVideoEnable={setIsVideoEnable}
+              />
               {/* Permissions */}
               <div className="mt-4 grid grid-cols-2 gap-2">
                 <AudioDropList setStream={setStream} audioInput={audioInput} />

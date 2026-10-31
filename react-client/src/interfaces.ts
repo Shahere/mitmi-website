@@ -83,4 +83,8 @@ export interface iVideoDropList {
 export interface iAvatar {
   localStreamRef: RefObject<HTMLVideoElement | null>;
   stream: Stream | undefined;
+  isAudioEnable: Boolean;
+  setIsAudioEnable: React.Dispatch<React.SetStateAction<Boolean>>;
+  isVideoEnable: Boolean;
+  setIsVideoEnable: React.Dispatch<React.SetStateAction<Boolean>>;
 }
